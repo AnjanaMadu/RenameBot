@@ -1,13 +1,13 @@
 import os
 import time
 import math
-from os.environ import get
+from os import environ
 from pathlib import Path
 
 AUTH_USER = [1080732057, 1252058587, 1215768187]
-APP_ID = int(get('APP_ID', 123456))
-API_HASH = get('API_HASH')
-TOKEN = get('TOKEN')
+APP_ID = int(environ.get('APP_ID', 123456))
+API_HASH = environ.get('API_HASH')
+TOKEN = environ.get('TOKEN')
 
 def humanbytes(size):
     power = 2 ** 10
@@ -45,8 +45,8 @@ async def download_to_local(client, media, update, start):
     )
     return path
 
-async def upload_to_telegram(c, chat, fp, msg, s_time):
-    image_ext = tuple([".jpg", ".png", ".jpeg"])
+async def upload_to_telegram(c, chat, fp, msg, start):
+    image_ext = tuple([".jpg", ".png", ".jpeg", ".webp"])
     vid_ext = tuple([".mp4", ".mkv"])
     sticker_ext = tuple([".wepb", ".tgs"])
     song_ext = tuple([".mp3", ".wav", ".m4a"])
@@ -57,43 +57,53 @@ async def upload_to_telegram(c, chat, fp, msg, s_time):
                 chat,
                 fp,
                 progress=progress,
-                progress_args=(msg, s_time, f"Uploading {file_name}"),
+                progress_args=(msg, start, f"Uploading {file_name}"),
             )
         elif fp.endswith(vid_ext):
             await c.send_video(
                 chat,
                 fp,
                 progress=progress,
-                progress_args=(msg, s_time, f"Uploading {file_name}"),
+                progress_args=(msg, start, f"Uploading {file_name}"),
             )
         elif fp.endswith(".gif"):
             await c.send_animation(
                 chat,
                 fp,
                 progress=progress,
-                progress_args=(msg, s_time, f"Uploading {file_name}"),
+                progress_args=(msg, start, f"Uploading {file_name}"),
             )
         elif fp.endswith(song_ext):
             await c.send_audio(
                 chat,
                 fp,
                 progress=progress,
-                progress_args=(msg, s_time, f"Uploading {file_name}"),
+                progress_args=(msg, start, f"Uploading {file_name}"),
             )
         elif fp.endswith(sticker_ext):
             await c.send_sticker(
                 chat,
                 fp,
                 progress=progress,
-                progress_args=(msg, s_time, f"Uploading {file_name}"),
+                progress_args=(msg, start, f"Uploading {file_name}"),
             )
         else:
             await c.send_document(
                 chat,
                 fp,
                 progress=progress,
-                progress_args=(msg, s_time, f"Uploading {file_name}"),
+                progress_args=(msg, start, f"Uploading {file_name}"),
             )
     except Exception as e:
         err = str(e)
         return await msg.edit(err)
+
+def delete_file(file):
+    if os.isfile(file):
+        try:
+            os.remove(file)
+            return True
+        except:
+            return False
+    else:
+        return False

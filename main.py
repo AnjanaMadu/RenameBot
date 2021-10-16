@@ -1,6 +1,6 @@
 from pyrogram import Client
 from pyrogram import idle
-from plugins import (
+from plugins.utils import (
   APP_ID,
   API_HASH,
   TOKEN
@@ -10,7 +10,7 @@ app = Client(
   'App',
   APP_ID,
   API_HASH,
-  bot_token=TOKEN
+  bot_token=TOKEN,
   plugins=dict(root='plugins')
 )
 
