@@ -1,3 +1,4 @@
+import logging
 from pyrogram import Client
 from pyrogram import idle
 from plugins.utils import (
@@ -5,6 +6,8 @@ from plugins.utils import (
   API_HASH,
   TOKEN
 )
+
+LOGGER = logging.getLogger(__name__)
 
 app = Client(
   'App',
@@ -15,5 +18,5 @@ app = Client(
 )
 
 app.start()
-print('Bot started!')
+LOGGER.info('Bot started!')
 idle()
