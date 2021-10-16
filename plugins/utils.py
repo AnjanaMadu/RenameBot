@@ -2,7 +2,6 @@ import os
 import time
 import math
 from os import environ
-from pathlib import Path
 
 AUTH_USER = [1080732057, 1252058587, 1215768187]
 APP_ID = int(environ.get('APP_ID', 123456))
@@ -99,7 +98,7 @@ async def upload_to_telegram(c, chat, fp, msg, start):
         return await msg.edit(err)
 
 def delete_file(file):
-    if os.isfile(file):
+    if os.path.isfile(file):
         try:
             os.remove(file)
             return True
