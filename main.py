@@ -7,6 +7,10 @@ from plugins.utils import (
   TOKEN
 )
 
+logging.basicConfig(
+  level=logging.INFO,
+  format="%(asctime)s - %(levelname)s - %(message)s"
+)
 LOGGER = logging.getLogger(__name__)
 
 app = Client(
