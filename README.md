@@ -6,4 +6,4 @@
 - No need ideas.
 - No maintain.
 - No support to **rape heroku**.
-- I'll **never** thumbnail feature. _Cuz "simple" == "simple"._
+- I'll **never** add custom thumbnail feature. _Cuz "simple" == "simple"._
